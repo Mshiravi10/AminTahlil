@@ -1,0 +1,39 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle with gradient -->
+  <circle cx="100" cy="100" r="95" fill="url(#paint0_linear)" />
+  
+  <!-- Inner ring -->
+  <circle cx="100" cy="100" r="80" stroke="white" stroke-width="4" stroke-opacity="0.8" fill="none" />
+  
+  <!-- Central node -->
+  <circle cx="100" cy="100" r="16" fill="white" />
+  
+  <!-- Connecting nodes -->
+  <circle cx="60" cy="60" r="12" fill="white" />
+  <circle cx="140" cy="60" r="12" fill="white" />
+  <circle cx="60" cy="140" r="12" fill="white" />
+  <circle cx="140" cy="140" r="12" fill="white" />
+  
+  <!-- Connection lines -->
+  <line x1="73" y1="68" x2="88" y2="87" stroke="white" stroke-width="3" />
+  <line x1="128" y1="68" x2="112" y2="87" stroke="white" stroke-width="3" />
+  <line x1="73" y1="132" x2="88" y2="112" stroke="white" stroke-width="3" />
+  <line x1="128" y1="132" x2="112" y2="112" stroke="white" stroke-width="3" />
+  
+  <!-- Additional connection lines -->
+  <line x1="60" y1="73" x2="60" y2="127" stroke="white" stroke-width="3" />
+  <line x1="140" y1="73" x2="140" y2="127" stroke="white" stroke-width="3" />
+  <line x1="73" y1="60" x2="127" y2="60" stroke="white" stroke-width="3" />
+  <line x1="73" y1="140" x2="127" y2="140" stroke="white" stroke-width="3" />
+  
+  <!-- Text element for the Arabic character 'ا' -->
+  <text x="100" y="107" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#2652f5" text-anchor="middle">ا</text>
+  
+  <!-- Gradient definition -->
+  <defs>
+    <linearGradient id="paint0_linear" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3b76ff" />
+      <stop offset="1" stop-color="#2035ba" />
+    </linearGradient>
+  </defs>
+</svg>
