@@ -1,4 +1,5 @@
 using AminTahlil.Api.Configuration;
+using AminTahlil.Api.Hubs;
 using AminTahlil.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -12,6 +13,7 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Polly;
 using Polly.Extensions.Http;
+using StackExchange.Redis;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -26,18 +28,21 @@ builder.Configuration.AddEnvironmentVariables();
 // Configure options
 builder.Services.Configure<JaegerOptions>(builder.Configuration.GetSection(JaegerOptions.Jaeger));
 builder.Services.Configure<FeaturesOptions>(builder.Configuration.GetSection(FeaturesOptions.Features));
+builder.Services.Configure<RedisOptions>(builder.Configuration.GetSection(RedisOptions.Redis));
 
-// Add controllers
+// Add controllers and SignalR
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
 
-// Configure CORS for the React frontend
+// Configure CORS for the React frontend with SignalR support
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
+        policy.AllowAnyMethod()
+              .AllowAnyHeader()
+              .SetIsOriginAllowed(_ => true) // Allow any origin
+              .AllowCredentials(); // Required for SignalR
     });
 });
 
@@ -47,6 +52,15 @@ builder.Services.AddHttpClient<IJaegerClient, JaegerClient>()
 
 // Register services
 builder.Services.AddScoped<ITraceService, TraceService>();
+
+// Register Redis service
+builder.Services.AddSingleton<IRedisService, RedisService>();
+
+// Register notification service
+builder.Services.AddScoped<INotificationService, NotificationService>();
+
+// Register service monitoring background service
+builder.Services.AddHostedService<ServiceMonitoringService>();
 
 // Add OpenTelemetry
 builder.Services.AddOpenTelemetry()
@@ -108,6 +122,9 @@ app.UseCors();
 
 app.MapControllers();
 app.MapHealthChecks("/api/health");
+
+// Map SignalR hub
+app.MapHub<NotificationHub>("/hubs/notifications");
 
 app.Run();
 

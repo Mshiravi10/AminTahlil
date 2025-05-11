@@ -29,5 +29,10 @@ namespace AminTahlil.Api.Configuration
         /// Whether the dashboard analytics feature is enabled
         /// </summary>
         public bool EnableDashboardAnalytics { get; set; } = true;
+        
+        /// <summary>
+        /// Whether the notification system feature is enabled
+        /// </summary>
+        public bool EnableNotifications { get; set; } = true;
     }
 }
